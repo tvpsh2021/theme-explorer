@@ -1,6 +1,7 @@
 import { useEffect, useRef, type PointerEvent as ReactPointerEvent } from 'react';
 import { cursorTypes, iconLabels } from '../data/theme-format';
 import type { Locale } from '../i18n';
+import { wallpaperBackground } from '../lib/wallpaper';
 import { moveWindowGeometry, resizeWindowGeometry, type ResizeEdge, type WindowGeometry } from '../lib/window-geometry';
 import type { CursorId, DesktopIconId, ThemeManifest } from '../types/theme';
 
@@ -38,6 +39,11 @@ type MuseumWindowProps = {
   onCursorSelect: (id: CursorId) => void;
   soundError: string | null;
 };
+
+// The preview box is far smaller than the desktop, so only tiling is reproduced; other layouts show the image itself.
+function wallpaperPreviewStyle(src: string, layout: ThemeManifest['wallpaperLayout']) {
+  return layout === 'tile' ? wallpaperBackground(src, 'tile') : { backgroundImage: `url("${src}")` };
+}
 
 const copy = {
   'zh-TW': {
@@ -158,7 +164,7 @@ export function MuseumWindow({ locale, themes, selected, onSelect, onImport, onL
             </aside>
             <div className="theme-detail">
               <div className="detail-topline"><span>{text.nowShowing}</span><span>{selected.colorDepth ?? text.colorDepthUnknown}</span></div>
-              <div className={`wallpaper-preview ${selected.wallpaper ? '' : 'missing-preview'}`} style={selected.wallpaper ? { backgroundImage: `url("${selected.wallpaper}")` } : undefined}>
+              <div className={`wallpaper-preview ${selected.wallpaper ? '' : 'missing-preview'}`} style={selected.wallpaper ? wallpaperPreviewStyle(selected.wallpaper, selected.wallpaperLayout) : undefined}>
                 <span className="preview-label">{selected.wallpaper ? text.wallpaperPreview : text.noWallpaper}</span>
               </div>
               <div className="detail-heading"><h2>{selected.name}</h2><span>{text.themeNumber} {String(themes.indexOf(selected) + 1).padStart(2, '0')} / {themes.length}</span></div>

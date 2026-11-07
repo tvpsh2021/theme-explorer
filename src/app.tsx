@@ -9,6 +9,7 @@ import { Taskbar } from './components/taskbar';
 import { interactionSounds } from './data/theme-format';
 import { appCopy, LANGUAGE_PREFERENCE_KEY, loadLanguagePreference, resolveLocale, type LanguagePreference } from './i18n';
 import { importLocalThemes, importThemes } from './lib/theme-loader';
+import { wallpaperBackground } from './lib/wallpaper';
 import { clampWindowGeometry, initialWindowGeometry, type WindowGeometry } from './lib/window-geometry';
 import type { CursorId, ThemeImportResult, ThemeManifest } from './types/theme';
 
@@ -214,8 +215,13 @@ export function App() {
 
   function selectLanguage(preference: LanguagePreference) {
     setLanguagePreference(preference);
-    if (preference === 'browser') window.localStorage.removeItem(LANGUAGE_PREFERENCE_KEY);
-    else window.localStorage.setItem(LANGUAGE_PREFERENCE_KEY, preference);
+    try {
+      if (preference === 'browser') window.localStorage.removeItem(LANGUAGE_PREFERENCE_KEY);
+      else window.localStorage.setItem(LANGUAGE_PREFERENCE_KEY, preference);
+    } catch (error) {
+      // The choice still applies for this session; it just will not persist.
+      console.warn('Language preference could not be saved', error);
+    }
   }
 
   function openComputer(location: ExplorerLocation = 'computer') {
@@ -310,7 +316,7 @@ export function App() {
           ref={desktopRef}
           className={`desktop ${animatedCursorSrc && animatedPointerReady ? 'busy-mode' : ''}`}
           style={{
-            backgroundImage: theme?.wallpaper ? `url("${theme.wallpaper}")` : undefined,
+            ...(theme?.wallpaper ? wallpaperBackground(theme.wallpaper, theme.wallpaperLayout) : {}),
             '--arrow-cursor': cssCursorSrc ? `url("${cssCursorSrc}"), auto` : 'auto',
             '--text-cursor': textCursorSrc ? `url("${textCursorSrc}"), text` : 'text',
           } as React.CSSProperties}

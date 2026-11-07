@@ -18,7 +18,13 @@ export function resolveLocale(preference: LanguagePreference): Locale {
 }
 
 export function loadLanguagePreference(): LanguagePreference {
-  const stored = window.localStorage.getItem(LANGUAGE_PREFERENCE_KEY);
+  let stored: string | null;
+  try {
+    stored = window.localStorage.getItem(LANGUAGE_PREFERENCE_KEY);
+  } catch {
+    // Storage can be blocked by browser privacy settings; following the browser language is the intended default.
+    return 'browser';
+  }
   return stored === 'zh-TW' || stored === 'en' ? stored : 'browser';
 }
 

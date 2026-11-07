@@ -35,13 +35,15 @@ Choose **Choose folder…**, then select a folder containing the `.theme` files 
 
 The importer parses the standard INI sections used by `.theme` files:
 
-- Desktop wallpaper
+- Desktop wallpaper and its layout (center, tile, stretch, fit, fill)
 - Desktop icons
 - Static and animated cursors
-- Application event sounds
+- System and Explorer event sounds
 - Theme color depth metadata
 
 Paths using `%ThemeDir%`, `%WinDir%`, `%SystemRoot%`, relative paths, and drive-qualified paths are resolved only against files in the folder selected by the user. The app never reads arbitrary operating system paths. Missing or unsupported references are reported in the theme details.
+
+Theme files are decoded as UTF-16 when they have a BOM, otherwise as UTF-8, falling back to Windows-1252. Legacy East Asian code pages such as Big5 are not detected.
 
 Microsoft ADPCM WAV files are converted to browser-playable PCM in memory. ANI cursors are decoded client-side. Generated object URLs are revoked when another folder is imported or the app closes.
 

@@ -14,6 +14,8 @@ button:focus-visible { outline: 2px dotted #111; outline-offset: 2px; }
 .desktop-icon { display: flex; flex-direction: column; align-items: center; gap: 7px; width: 84px; min-height: 84px; padding: 5px 1px; border: 0; background: transparent; color: white; text-align: center; text-shadow: 1px 1px 2px #10252a; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.15; }
 .desktop-icon:hover, .desktop-icon:focus-visible { background: transparent; outline: 0; }
 .desktop-icon img, .desktop-icon-glyph { display: grid; place-items: center; width: 44px; height: 44px; object-fit: contain; image-rendering: pixelated; }
+/* Bundled defaults are high-resolution art; keep pixelated scaling for low-resolution theme icons only. */
+.desktop-icon img[src^="/icons/"] { image-rendering: auto; }
 .desktop-icon-glyph { color: #fff; border: 2px outset #ddd; background: #1d317a; font-size: 15px; font-weight: 700; text-shadow: none; }
 .desktop-icon > span:last-child { padding: 2px 3px; }
 .desktop-icon:hover img, .desktop-icon:focus-visible img, .desktop-icon:hover .desktop-icon-glyph, .desktop-icon:focus-visible .desktop-icon-glyph { outline: 1px dotted white; background-color: rgba(0, 0, 128, .62); }
@@ -23,7 +25,7 @@ button:focus-visible { outline: 2px dotted #111; outline-offset: 2px; }
 .window.maximized { inset: 0 0 40px; width: auto; height: auto; min-height: 0; transform: none; box-shadow: none; }
 .title-bar { display: flex; align-items: center; justify-content: space-between; height: 27px; min-height: 27px; padding: 0 4px 0 8px; color: white; background: linear-gradient(90deg, #09266e, #5978b0); font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; touch-action: none; user-select: none; cursor: move; }
 .title-text { display: flex; align-items: center; gap: 7px; }
-.title-text img { width: 18px; height: 18px; object-fit: contain; image-rendering: pixelated; }
+.title-text img { width: 18px; height: 18px; object-fit: contain; }
 .title-icon { color: #fff; font-size: 17px; }
 .window-actions { display: flex; gap: 2px; }
 .window-actions button { display: grid; place-items: center; width: 21px; height: 20px; padding: 0; border: 2px solid; border-color: white #525252 #525252 white; background: #c0c0c0; color: #111; line-height: 0; }
@@ -139,7 +141,7 @@ button:focus-visible { outline: 2px dotted #111; outline-offset: 2px; }
 .task-button { min-width: 152px; max-width: 200px; height: 29px; padding: 0 9px; border: 2px solid; border-color: #fff #555 #555 #fff; background: #c0c0c0; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
 .task-button.active { border-color: #555 #fff #fff #555; background: #d4d4d4; font-weight: bold; }
 .task-button span { margin-right: 4px; color: #214477; }
-.task-button img { width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; object-fit: contain; image-rendering: pixelated; }
+.task-button img { width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; object-fit: contain; }
 .taskbar-spacer { flex: 1; }
 .tray { display: flex; align-items: center; gap: 11px; min-width: 110px; height: 28px; padding: 0 8px; border: 2px solid; border-color: #777 #fff #fff #777; font-size: 12px; }
 .tray-speaker { font-size: 13px; }
@@ -150,7 +152,7 @@ button:focus-visible { outline: 2px dotted #111; outline-offset: 2px; }
 .start-items button { display: flex; align-items: center; gap: 10px; width: 100%; height: 38px; padding: 0 10px; border: 0; background: transparent; text-align: left; font-size: 13px; }
 .start-items button:hover { background: #102c79; color: white; }
 .start-items button span { display: grid; place-items: center; width: 25px; font-size: 19px; color: #1a347f; }
-.start-items button img { width: 25px; height: 25px; object-fit: contain; image-rendering: pixelated; }
+.start-items button img { width: 25px; height: 25px; object-fit: contain; }
 .start-items button:hover span { color: white; }
 .start-items button small { margin-left: auto; font-size: 18px; }
 .start-separator { margin: 7px 4px; border-top: 1px solid #777; border-bottom: 1px solid white; }
@@ -178,20 +180,20 @@ button:focus-visible { outline: 2px dotted #111; outline-offset: 2px; }
 .explorer-toolbar span::first-letter { text-decoration: underline; }
 .address-bar { display: flex; align-items: center; gap: 7px; min-height: 31px; padding: 3px 7px; border-bottom: 1px solid #888; font-size: 11px; }
 .address-bar > div { display: flex; align-items: center; gap: 6px; flex: 1; height: 23px; padding: 1px 6px; border: 2px solid; border-color: #777 #fff #fff #777; background: white; }
-.address-bar img { width: 17px; height: 17px; object-fit: contain; image-rendering: pixelated; }
+.address-bar img { width: 17px; height: 17px; object-fit: contain; }
 .explorer-content { flex: 1; min-height: 0; margin: 0 3px 3px; padding: 18px; overflow: auto; border: 2px solid; border-color: #777 #fff #fff #777; background: white; }
 .explorer-section-title { margin: 0 0 10px; padding-bottom: 5px; border-bottom: 1px solid #d4d4d4; color: #555; font-size: 12px; font-weight: 700; }
 .drive-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .drive-item { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 9px; border: 1px solid transparent; background: transparent; text-align: left; }
 .drive-item:hover, .drive-item:focus-visible { border-color: #25458c; background: #e7ebf6; }
-.drive-item img { flex: 0 0 54px; width: 54px; height: 54px; object-fit: contain; image-rendering: pixelated; }
+.drive-item img { flex: 0 0 54px; width: 54px; height: 54px; object-fit: contain; }
 .drive-item span { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 5px; }
 .drive-item strong { color: #222; font-size: 13px; }
 .drive-item small { color: #777; font-size: 10px; }
 .drive-item i { display: block; height: 8px; border: 1px solid #777; background: white; }
 .drive-item i b { display: block; width: 41%; height: 100%; background: #273f84; }
 .empty-folder { display: grid; place-items: center; min-height: 190px; color: #777; font-size: 13px; text-align: center; }
-.empty-folder img { width: 72px; height: 72px; object-fit: contain; image-rendering: pixelated; }
+.empty-folder img { width: 72px; height: 72px; object-fit: contain; }
 
 @media (max-width: 800px) {
   .window { width: calc(100% - 24px); height: calc(100% - 70px); top: 12px; left: 12px; transform: none; min-height: 0; }
